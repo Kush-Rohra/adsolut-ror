@@ -1,0 +1,9 @@
+<h2>Import Tags</h2>
+
+<%= form_tag import_uploads_path, multipart: true do %>
+
+<%= select_tag :user_id, options_from_collection_for_select(User.all, "id", "email") %>
+
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

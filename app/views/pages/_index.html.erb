@@ -1,0 +1,48 @@
+  <%= form_tag(search_index_pages_path, :method => "post", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Tag Name" %>
+      <%= date_select(:start_date, 'start_date', :order => [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' })%>
+      <%= date_select(:end_date, 'end_date', :order => [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' })%>
+      <%# date_field :start_date, params[:start_date] %>
+      <%# date_field :end_date, params[:end_date] %>
+      <%= submit_tag "Search" %>
+<% end %>
+ <p>
+    Download:
+    <%= link_to "CSV", root_path(format: "csv") %> |
+    <%= link_to "Excel", root_path(format: "xls") %>
+  </p>
+    
+    <div class="panel panel-default">
+    <!-- Table -->
+    <table class="table table-hover">
+      <thead>
+          <tr>
+            <th>Tag Name</th>
+            <th>Ad Request</th>
+            <th>Match Request</th>
+            <th>Clicks</th>
+            <th>CTR</th>
+            <th>ECPM</th>
+            <th>Partner From</th>
+            <th class="col-xs-4 col-md-4">From Date</th>
+            <th class="col-xs-4 col-md-4">To Date</th>
+          </tr>
+      </thead>
+      <tbody>
+          <% @tags_infos.each do |tagsinfo| %>
+            <tr>
+              <td><%= tagsinfo.tag.name %></td>
+              <td><%= tagsinfo.ad_request %></td>
+              <td><%= tagsinfo.match_request %></td>
+              <td><%= tagsinfo.clicks %></td>
+              <td><%= tagsinfo.ctr %></td>
+              <td><%= tagsinfo.ecpm %></td>
+              <td><%= tagsinfo.partner_revenue %></td>
+              <td><%= tagsinfo.frm_date %></td>
+              <td><%= tagsinfo.to_date %></td>
+            </tr>
+          <% end %>
+      </tbody>
+    </table>
+    <%= paginate @tags_infos %>
+  </div>
